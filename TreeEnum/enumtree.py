@@ -13,7 +13,9 @@ def compute_md5(filename):
 
 class FileTree:
     def __init__(self):
-        self.columns = ['path', 'filename', 'date_create', 'md5', 'sha256']
+        self.columns = ['path', 'filename', 'date_create',
+                        'md5', 'sha256',
+                        'Comments', 'reviewer']
         self.df_dirent = pd.DataFrame(columns = self.columns)
 
     def add_dirent(self, path, filename):        
@@ -21,7 +23,9 @@ class FileTree:
         mtime = time.strftime("%Y %m %d %H:%M:%S",
                               time.gmtime(os.path.getmtime(path +
                                                            "/" + filename)))
-        data = [path, filename, mtime, hexmd5, 'NOTCOMPUTED/NOTCOMPUTED']
+        data = [path, filename, mtime,
+                hexmd5, 'NOTCOMPUTED/NOTCOMPUTED',
+                'no comment', 'N/A']
         df_newdirent = pd.DataFrame([data], columns=self.columns)
         self.df_dirent = self.df_dirent.append(df_newdirent, ignore_index=True)
         
@@ -56,7 +60,7 @@ class FileTree:
         #self.df_dirent.to_excel(filename)
 
 def main():
-    if len(sys.argv[1]):
+    if len(sys.argv) < 3:
         print("Usage: %s <file.xml> <path1> [<path2> ...]" % sys.argv[0])
         sys.exit(-1)
     ft = FileTree()
