@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+mkdir 01-setup
+mkdir 02-results
+mkdir 03-report
+
